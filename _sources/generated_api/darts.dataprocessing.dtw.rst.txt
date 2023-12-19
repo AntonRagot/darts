@@ -1,0 +1,12 @@
+
+
+
+.. automodule:: darts.dataprocessing.dtw
+
+    .. toctree::
+        :maxdepth: 1
+        
+        
+        darts.dataprocessing.dtw.cost_matrix
+        darts.dataprocessing.dtw.dtw
+        darts.dataprocessing.dtw.window

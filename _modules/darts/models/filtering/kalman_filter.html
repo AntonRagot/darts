@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>darts.models.filtering.kalman_filter &#8212; darts  documentation</title>
+    
+  <link href="../../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/docs-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../../index.html">
+  <img src="../../../../_static/darts-logo-trim.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../README.html">
+  Home
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../quickstart/00-quickstart.html">
+  Quickstart
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../userguide.html">
+  User Guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../generated_api/darts.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../examples.html">
+  Examples
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/unit8co/darts" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/unit8co" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for darts.models.filtering.kalman_filter</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Kalman Filter</span>
+<span class="sd">-------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">nfoursid.kalman</span> <span class="kn">import</span> <span class="n">Kalman</span>
+<span class="kn">from</span> <span class="nn">nfoursid.nfoursid</span> <span class="kn">import</span> <span class="n">NFourSID</span>
+
+<span class="kn">from</span> <span class="nn">darts.logging</span> <span class="kn">import</span> <span class="n">raise_if</span><span class="p">,</span> <span class="n">raise_if_not</span>
+<span class="kn">from</span> <span class="nn">darts.models.filtering.filtering_model</span> <span class="kn">import</span> <span class="n">FilteringModel</span>
+<span class="kn">from</span> <span class="nn">darts.timeseries</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
+
+
+<div class="viewcode-block" id="KalmanFilter"><a class="viewcode-back" href="../../../../generated_api/darts.models.filtering.kalman_filter.html#darts.models.filtering.kalman_filter.KalmanFilter">[docs]</a><span class="k">class</span> <span class="nc">KalmanFilter</span><span class="p">(</span><span class="n">FilteringModel</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Kalman</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This model implements a Kalman filter over a time series.</span>
+
+<span class="sd">        The key method is `KalmanFilter.filter()`.</span>
+<span class="sd">        It considers the provided time series as containing (possibly noisy) observations z obtained from a</span>
+<span class="sd">        (possibly noisy) linear dynamical system with hidden state x. The function `filter(series)` returns a new</span>
+<span class="sd">        `TimeSeries` describing the distribution of the output z (without noise), as inferred by the Kalman filter from</span>
+<span class="sd">        sequentially observing z from `series`, and the dynamics of the linear system of order dim_x.</span>
+
+<span class="sd">        This filter also supports missing values in the observation series, in which case the underlying</span>
+<span class="sd">        Kalman filter will carry on using its mean estimate.</span>
+
+<span class="sd">        The method `KalmanFilter.fit()` is used to initialize the Kalman filter by estimating the state space model of</span>
+<span class="sd">        a linear dynamical system and the covariance matrices of the process and measurement noise using the N4SID</span>
+<span class="sd">        algorithm.</span>
+
+<span class="sd">        This implementation uses Kalman from the NFourSID package. More information can be found here:</span>
+<span class="sd">        https://nfoursid.readthedocs.io/en/latest/source/kalman.html.</span>
+
+<span class="sd">        The dimensionality of the measurements z and optional control signal (covariates) u is automatically inferred</span>
+<span class="sd">        upon calling `filter()`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dim_x : int</span>
+<span class="sd">            Size of the Kalman filter state vector.</span>
+<span class="sd">        kf : nfoursid.kalman.Kalman</span>
+<span class="sd">            Optionally, an instance of `nfoursid.kalman.Kalman`.</span>
+<span class="sd">            If this is provided, the parameter dim_x is ignored. This instance will be copied for every</span>
+<span class="sd">            call to `filter()`, so the state is not carried over from one time series to another across several</span>
+<span class="sd">            calls to `filter()`.</span>
+<span class="sd">            The dimensionalities of the filter must match those of the `TimeSeries` used when calling `filter()`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Add support for x_init. Needs reimplementation of NFourSID.</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">kf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dim_x</span> <span class="o">=</span> <span class="n">dim_x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kf_provided</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="n">kf</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dim_u</span> <span class="o">=</span> <span class="n">kf</span><span class="o">.</span><span class="n">state_space</span><span class="o">.</span><span class="n">u_dim</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dim_x</span> <span class="o">=</span> <span class="n">kf</span><span class="o">.</span><span class="n">state_space</span><span class="o">.</span><span class="n">x_dim</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dim_y</span> <span class="o">=</span> <span class="n">kf</span><span class="o">.</span><span class="n">state_space</span><span class="o">.</span><span class="n">y_dim</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kf_provided</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_u</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_expect_covariates</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;KalmanFilter(dim_x=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_x</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="KalmanFilter.fit"><a class="viewcode-back" href="../../../../generated_api/darts.models.filtering.kalman_filter.html#darts.models.filtering.kalman_filter.KalmanFilter.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">series</span><span class="p">:</span> <span class="n">TimeSeries</span><span class="p">,</span>
+        <span class="n">covariates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TimeSeries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_block_rows</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;KalmanFilter&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Kalman filter using the N4SID algorithm.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        series : TimeSeries</span>
+<span class="sd">            The series of outputs (observations) used to infer the underlying state space model.</span>
+<span class="sd">            This must be a deterministic series (containing one sample).</span>
+<span class="sd">        covariates : Optional[TimeSeries]</span>
+<span class="sd">            An optional series of inputs (control signal) that will also be used to infer the underlying state space</span>
+<span class="sd">            model. This must be a deterministic series (containing one sample).</span>
+<span class="sd">        num_block_rows : Optional[int]</span>
+<span class="sd">            The number of block rows to use in the block Hankel matrices used in the N4SID algorithm.</span>
+<span class="sd">            See the documentation of nfoursid.nfoursid.NFourSID for more information.</span>
+<span class="sd">            If not provided, the dimensionality of the state space model will be used, with a maximum of 10.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">            Fitted Kalman filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">covariates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expect_covariates</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">covariates</span> <span class="o">=</span> <span class="n">covariates</span><span class="o">.</span><span class="n">slice_intersect</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+            <span class="n">raise_if_not</span><span class="p">(</span>
+                <span class="n">series</span><span class="o">.</span><span class="n">has_same_time_as</span><span class="p">(</span><span class="n">covariates</span><span class="p">),</span>
+                <span class="s2">&quot;The number of timesteps in the series and the covariates must match.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># TODO: Handle multiple timeseries. Needs reimplementation of NFourSID?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim_y</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">width</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">pd_dataframe</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;y_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">covariates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dim_u</span> <span class="o">=</span> <span class="n">covariates</span><span class="o">.</span><span class="n">width</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="n">covariates</span><span class="o">.</span><span class="n">pd_dataframe</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">inputs</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;u_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="n">input_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            <span class="n">measurements</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">outputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">measurements</span> <span class="o">=</span> <span class="n">outputs</span>
+            <span class="n">input_columns</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">num_block_rows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num_block_rows</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_x</span><span class="p">)</span>
+        <span class="n">nfoursid</span> <span class="o">=</span> <span class="n">NFourSID</span><span class="p">(</span>
+            <span class="n">measurements</span><span class="p">,</span>
+            <span class="n">output_columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+            <span class="n">input_columns</span><span class="o">=</span><span class="n">input_columns</span><span class="p">,</span>
+            <span class="n">num_block_rows</span><span class="o">=</span><span class="n">num_block_rows</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">nfoursid</span><span class="o">.</span><span class="n">subspace_identification</span><span class="p">()</span>
+        <span class="n">state_space_identified</span><span class="p">,</span> <span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">nfoursid</span><span class="o">.</span><span class="n">system_identification</span><span class="p">(</span>
+            <span class="n">rank</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_x</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kf</span> <span class="o">=</span> <span class="n">Kalman</span><span class="p">(</span><span class="n">state_space_identified</span><span class="p">,</span> <span class="n">covariance_matrix</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="KalmanFilter.filter"><a class="viewcode-back" href="../../../../generated_api/darts.models.filtering.kalman_filter.html#darts.models.filtering.kalman_filter.KalmanFilter.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">series</span><span class="p">:</span> <span class="n">TimeSeries</span><span class="p">,</span>
+        <span class="n">covariates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TimeSeries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TimeSeries</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sequentially applies the Kalman filter on the provided series of observations.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        series : TimeSeries</span>
+<span class="sd">            The series of outputs (observations) used to infer the underlying outputs according to the specified Kalman</span>
+<span class="sd">            process. This must be a deterministic series (containing one sample).</span>
+<span class="sd">        covariates : Optional[TimeSeries]</span>
+<span class="sd">            An optional series of inputs (control signal), necessary if the Kalman filter was initialized with</span>
+<span class="sd">            covariates. This must be a deterministic series (containing one sample).</span>
+<span class="sd">        num_samples : int, default: 1</span>
+<span class="sd">            The number of samples to generate from the inferred distribution of the output z. If this is set to 1, the</span>
+<span class="sd">            output is a `TimeSeries` containing a single sample using the mean of the distribution.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TimeSeries</span>
+<span class="sd">            A (stochastic) `TimeSeries` of the inferred output z, of the same width as the input series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+
+        <span class="n">raise_if</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;The Kalman filter has not been fitted yet. Call `fit()` first &quot;</span>
+            <span class="s2">&quot;or provide Kalman filter in constructor.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">raise_if_not</span><span class="p">(</span>
+            <span class="n">series</span><span class="o">.</span><span class="n">width</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_y</span><span class="p">,</span>
+            <span class="s2">&quot;The provided TimeSeries dimensionality does not match &quot;</span>
+            <span class="s2">&quot;the output dimensionality of the Kalman filter.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">raise_if</span><span class="p">(</span>
+            <span class="n">covariates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expect_covariates</span><span class="p">,</span>
+            <span class="s2">&quot;Covariates were provided, but the Kalman filter was not fitted with covariates.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expect_covariates</span><span class="p">:</span>
+            <span class="n">raise_if</span><span class="p">(</span>
+                <span class="n">covariates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;The Kalman filter was fitted with covariates, but these were not provided.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">raise_if_not</span><span class="p">(</span>
+                <span class="n">covariates</span><span class="o">.</span><span class="n">is_deterministic</span><span class="p">,</span>
+                <span class="s2">&quot;The covariates must be deterministic (observations).&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">covariates</span> <span class="o">=</span> <span class="n">covariates</span><span class="o">.</span><span class="n">slice_intersect</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+            <span class="n">raise_if_not</span><span class="p">(</span>
+                <span class="n">series</span><span class="o">.</span><span class="n">has_same_time_as</span><span class="p">(</span><span class="n">covariates</span><span class="p">),</span>
+                <span class="s2">&quot;The number of timesteps in the series and the covariates must match.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">kf</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="p">)</span>
+
+        <span class="n">y_values</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expect_covariates</span><span class="p">:</span>
+            <span class="n">u_values</span> <span class="o">=</span> <span class="n">covariates</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># set control signal to 0 if it contains NaNs:</span>
+            <span class="n">u_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">u_values</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">u_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">y_values</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="c1"># For each time step, we&#39;ll sample &quot;n_samples&quot; from a multivariate Gaussian</span>
+        <span class="c1"># whose mean vector and covariance matrix come from the Kalman filter.</span>
+        <span class="n">sampled_outputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">y_values</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_y</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_values</span><span class="p">)):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y_values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">u_values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="n">kf</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+            <span class="n">mean_vec</span> <span class="o">=</span> <span class="n">kf</span><span class="o">.</span><span class="n">y_filtereds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dim_y</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">num_samples</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">sampled_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_vec</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># The measurement covariance matrix is given by the sum of the covariance matrix of the</span>
+                <span class="c1"># state estimate (transformed by C) and the covariance matrix of the measurement noise.</span>
+                <span class="n">cov_matrix</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">kf</span><span class="o">.</span><span class="n">state_space</span><span class="o">.</span><span class="n">c</span> <span class="o">@</span> <span class="n">kf</span><span class="o">.</span><span class="n">p_filtereds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">kf</span><span class="o">.</span><span class="n">state_space</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">kf</span><span class="o">.</span><span class="n">r</span>
+                <span class="p">)</span>
+                <span class="n">sampled_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span>
+                    <span class="n">mean_vec</span><span class="p">,</span> <span class="n">cov_matrix</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_samples</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">with_values</span><span class="p">(</span><span class="n">sampled_outputs</span><span class="p">)</span></div></div>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2020 - 2023, Unit8 SA (Apache 2.0 License).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

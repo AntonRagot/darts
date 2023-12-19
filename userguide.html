@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>User Guide &#8212; darts  documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="_static/docs-favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TimeSeries" href="userguide/timeseries.html" />
+    <link rel="prev" title="Quickstart" href="quickstart/00-quickstart.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="index.html">
+  <img src="_static/darts-logo-trim.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="README.html">
+  Home
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="quickstart/00-quickstart.html">
+  Quickstart
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  User Guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="generated_api/darts.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="examples.html">
+  Examples
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/unit8co/darts" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/unit8co" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/timeseries.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     TimeSeries
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/forecasting_overview.html">
+   Overview of Forecasting Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/torch_forecasting_models.html">
+   Torch Forecasting Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/gpu_and_tpu_usage.html">
+   Using Torch Models with GPUs and TPUs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/covariates.html">
+   Covariates
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/hyperparameter_optimization.html">
+   Hyperparameter Optimization in Darts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="userguide/faq.html">
+   Frequently Asked Questions
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
+<p>You will find here some more detailed information about Darts.</p>
+<p><strong>Note:</strong> The user guide is not yet complete and still under construction.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userguide/timeseries.html"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#multivariate-time-series-vs-multiple-time-series">Multivariate time series -vs- multiple time series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#probabilistic-and-deterministic-series">Probabilistic and deterministic series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#creating-timeseries">Creating <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#exporting-data-from-a-timeseries">Exporting data from a <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#static-covariates">Static Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#hierarchical-time-series">Hierarchical Time Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/timeseries.html#more-information-and-documentation">More information and documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/forecasting_overview.html">Overview of Forecasting Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/forecasting_overview.html#generalities">Generalities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/forecasting_overview.html#saving-and-loading-models">Saving and Loading Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/forecasting_overview.html#support-for-multivariate-series">Support for multivariate series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/forecasting_overview.html#handling-multiple-series">Handling multiple series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/forecasting_overview.html#support-for-covariates">Support for Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/forecasting_overview.html#probabilistic-forecasts">Probabilistic forecasts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/torch_forecasting_models.html">Torch Forecasting Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#content-of-this-guide">Content of this guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#top-level-look-at-training-and-predicting-with-chunks">Top level look at training and predicting with chunks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#torch-forecasting-model-covariates-support">Torch Forecasting Model Covariates Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#required-target-time-spans-for-training-validation-and-prediction">Required target time spans for training, validation and prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#in-depth-look-at-how-input-data-is-used-when-training-and-predicting-with-tfms">In-depth look at how input data is used when training and predicting with TFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#id4">Forecast/Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#advanced-functionnalities">Advanced Functionnalities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/torch_forecasting_models.html#performance-recommendations">Performance Recommendations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/gpu_and_tpu_usage.html">Using Torch Models with GPUs and TPUs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/gpu_and_tpu_usage.html#use-cpu">Use CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/gpu_and_tpu_usage.html#use-a-gpu">Use a GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/gpu_and_tpu_usage.html#use-a-tpu">Use a TPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/covariates.html">Covariates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/covariates.html#summary-tl-dr">Summary - TL;DR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/covariates.html#introduction-what-are-covariates-in-darts">Introduction - What are covariates (in Darts)?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/covariates.html#forecasting-model-covariate-support">Forecasting Model Covariate Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/covariates.html#quick-guide-on-how-to-use-past-and-or-future-covariates-with-darts-forecasting-models">Quick guide on how to use past and/or future covariates with Darts’ forecasting models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/covariates.html#covariate-time-span-requirements-for-local-and-global-forecasting-models">Covariate time span requirements for Local and Global Forecasting Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/covariates.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/hyperparameter_optimization.html">Hyperparameter Optimization in Darts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userguide/hyperparameter_optimization.html#hyperparameter-optimization-with-optuna">Hyperparameter optimization with Optuna</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/hyperparameter_optimization.html#hyperparameter-optimization-with-ray-tune">Hyperparameter optimization with Ray Tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userguide/hyperparameter_optimization.html#hyperparameter-optimization-using-gridsearch">Hyperparameter optimization using <code class="docutils literal notranslate"><span class="pre">gridsearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</div>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="quickstart/00-quickstart.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Quickstart</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="userguide/timeseries.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2020 - 2023, Unit8 SA (Apache 2.0 License).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+
+
+
+.. automodule:: darts
+
+    .. toctree::
+        :maxdepth: 1
+        
+        darts.ad
+        darts.dataprocessing
+        darts.datasets
+        darts.explainability
+        darts.metrics
+        darts.models
+        darts.utils
+        
+        darts.timeseries

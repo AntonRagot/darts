@@ -1,0 +1,46 @@
+
+
+
+.. automodule:: darts.models.forecasting
+
+    .. toctree::
+        :maxdepth: 1
+        
+        
+        darts.models.forecasting.arima
+        darts.models.forecasting.auto_arima
+        darts.models.forecasting.baselines
+        darts.models.forecasting.block_rnn_model
+        darts.models.forecasting.catboost_model
+        darts.models.forecasting.croston
+        darts.models.forecasting.dlinear
+        darts.models.forecasting.ensemble_model
+        darts.models.forecasting.exponential_smoothing
+        darts.models.forecasting.fft
+        darts.models.forecasting.forecasting_model
+        darts.models.forecasting.kalman_forecaster
+        darts.models.forecasting.lgbm
+        darts.models.forecasting.linear_regression_model
+        darts.models.forecasting.nbeats
+        darts.models.forecasting.nhits
+        darts.models.forecasting.nlinear
+        darts.models.forecasting.pl_forecasting_module
+        darts.models.forecasting.prophet_model
+        darts.models.forecasting.random_forest
+        darts.models.forecasting.regression_ensemble_model
+        darts.models.forecasting.regression_model
+        darts.models.forecasting.rnn_model
+        darts.models.forecasting.sf_auto_arima
+        darts.models.forecasting.sf_auto_ces
+        darts.models.forecasting.sf_auto_ets
+        darts.models.forecasting.sf_auto_theta
+        darts.models.forecasting.tbats_model
+        darts.models.forecasting.tcn_model
+        darts.models.forecasting.tft_model
+        darts.models.forecasting.tft_submodels
+        darts.models.forecasting.theta
+        darts.models.forecasting.tide_model
+        darts.models.forecasting.torch_forecasting_model
+        darts.models.forecasting.transformer_model
+        darts.models.forecasting.varima
+        darts.models.forecasting.xgboost

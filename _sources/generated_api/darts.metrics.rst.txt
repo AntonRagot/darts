@@ -1,0 +1,10 @@
+
+
+
+.. automodule:: darts.metrics
+
+    .. toctree::
+        :maxdepth: 1
+        
+        
+        darts.metrics.metrics

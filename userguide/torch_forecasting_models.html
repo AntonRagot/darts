@@ -1,0 +1,1316 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Torch Forecasting Models &#8212; darts  documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../_static/docs-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Torch Models with GPUs and TPUs" href="gpu_and_tpu_usage.html" />
+    <link rel="prev" title="Overview of Forecasting Models" href="forecasting_overview.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../index.html">
+  <img src="../_static/darts-logo-trim.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../README.html">
+  Home
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../quickstart/00-quickstart.html">
+  Quickstart
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../userguide.html">
+  User Guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../generated_api/darts.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../examples.html">
+  Examples
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/unit8co/darts" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/unit8co" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="timeseries.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     TimeSeries
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="forecasting_overview.html">
+   Overview of Forecasting Models
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Torch Forecasting Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gpu_and_tpu_usage.html">
+   Using Torch Models with GPUs and TPUs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="covariates.html">
+   Covariates
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hyperparameter_optimization.html">
+   Hyperparameter Optimization in Darts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="faq.html">
+   Frequently Asked Questions
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content-of-this-guide">
+   Content of this guide
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#top-level-look-at-training-and-predicting-with-chunks">
+   Top level look at training and predicting with chunks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#torch-forecasting-model-covariates-support">
+   Torch Forecasting Model Covariates Support
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#required-target-time-spans-for-training-validation-and-prediction">
+   Required target time spans for training, validation and prediction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-depth-look-at-how-input-data-is-used-when-training-and-predicting-with-tfms">
+   In-depth look at how input data is used when training and predicting with TFMs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training">
+     Training
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-with-a-validation-dataset">
+     Training with a validation dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   Forecast/Prediction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advanced-functionnalities">
+   Advanced Functionnalities
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#saving-and-loading-model-states">
+     Saving and Loading Model States
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#automatic-checkpointing">
+       Automatic checkpointing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       Manual saving / loading
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#training-saving-on-gpu-and-loading-on-cpu">
+       Training/Saving on GPU and loading on CPU
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#re-training-or-fine-tuning-a-pre-trained-model">
+       Re-training or fine-tuning a pre-trained model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     Callbacks
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-with-early-stopping">
+       Example with Early Stopping
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-of-custom-callback-to-store-losses">
+       Example of custom callback to store losses
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#performance-recommendations">
+   Performance Recommendations
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-your-timeseries-using-32-bits-data">
+     Build your
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       TimeSeries
+      </span>
+     </code>
+     using 32-bits data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#use-a-gpu">
+     Use a GPU
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tune-the-batch-size">
+     Tune the batch size
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tune-num-loader-workers">
+     Tune
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       num_loader_workers
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#small-models-first">
+     Small models first
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-in-memory-and-i-o-bottlenecks">
+     Data in Memory and I/O bottlenecks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#do-not-use-all-possible-sub-series-for-training">
+     Do not use
+     <em>
+      all
+     </em>
+     possible sub-series for training
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-benchmark">
+     Example Benchmark
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="torch-forecasting-models">
+<h1>Torch Forecasting Models<a class="headerlink" href="#torch-forecasting-models" title="Permalink to this headline">¶</a></h1>
+<p>This document was written for darts version 0.15.0 and later.</p>
+<p>We assume that you already know about covariates in Darts. If you’re new to the topic we recommend you to read our <a class="reference external" href="https://unit8co.github.io/darts/userguide/covariates.html">guide on covariates</a> first.</p>
+<section id="content-of-this-guide">
+<h2>Content of this guide<a class="headerlink" href="#content-of-this-guide" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Introduction section covers the most important points about Torch Forecasting Models (TFMs):</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#introduction">How to use TFMs</a></p></li>
+<li><p><a class="reference external" href="#top-level-look-at-training-and-predicting-with-chunks">Top-level look at chunks</a></p></li>
+<li><p><a class="reference external" href="#torch-forecasting-model-covariates-support">TFM covariates support</a></p></li>
+<li><p><a class="reference external" href="#required-target-time-spans-for-training-validation-and-prediction">Time span requirements for target and covariate series</a></p></li>
+</ul>
+</li>
+<li><p>Input data usage section gives an in-depth guide of how input data is used when training and predicting with TFMs:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#training">Simple training</a></p></li>
+<li><p><a class="reference external" href="#training-with-a-validation-dataset">Training with validation set</a></p></li>
+<li><p><a class="reference external" href="#forecastprediction">Forecast / Prediction</a></p></li>
+</ul>
+</li>
+<li><p>Advanced functionnalities section provides some example of TFMs advanced features:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#saving-and-loading-model-states">Model saving and loading</a></p>
+<ul>
+<li><p><a class="reference external" href="#automatic-checkpointing">Checkpoint saving / loading</a></p></li>
+<li><p><a class="reference external" href="#manual-saving--loading">Manual saving / loading</a></p></li>
+<li><p><a class="reference external" href="#trainingsaving-on-gpu-and-loading-on-cpu">Train &amp; save on GPU, load on CPU</a></p></li>
+<li><p><a class="reference external" href="#re-training-or-fine-tuning-a-pre-trained-model">Load pre-trained model for fine-tuning</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#callbacks">Callbacks</a></p>
+<ul>
+<li><p><a class="reference external" href="#example-with-early-stopping">Early Stopping</a></p></li>
+<li><p><a class="reference external" href="#example-of-custom-callback-to-store-losses">Custom Callback</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#performance-recommendations">Performance optimisation section</a> lists tricks to speed up the computation during training.</p></li>
+</ol>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In Darts, <strong>Torch Forecasting Models (TFMs)</strong> are broadly speaking “machine learning based” models, which denote PyTorch-based (deep learning) models.</p>
+<p>TFMs train and predict on fixed-length chunks (sub-samples) of your input <code class="docutils literal notranslate"><span class="pre">target</span></code> and <code class="docutils literal notranslate"><span class="pre">*_covariates</span></code> series (if supported). <code class="docutils literal notranslate"><span class="pre">Target</span></code> is the series for which we want to predict the future, <code class="docutils literal notranslate"><span class="pre">*_covariates</span></code> are the past and / or future covariates.</p>
+<p>Each chunk contains an input chunk - representing the sample’s past - and an output chunk - the sample’s future. The sample’s prediction point lies at the end of the input chunk. The length of these chunks has to be specified at model creation with parameters <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span></code> and <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code> (more on chunks in <a class="reference external" href="#top-level-look-at-training-and-predicting-with-chunks">the next subsection</a>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># model that looks 7 time steps back (past) and 1 time step ahead (future)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span><span class="n">input_chunk_length</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                                  <span class="n">output_chunk_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                  <span class="o">**</span><span class="n">model_kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All TFMs can be trained on single or multiple <code class="docutils literal notranslate"><span class="pre">target</span></code> series and, depending on their covariate support (covered in <a class="reference external" href="#torch-forecasting-model-covariates-support">this subsection</a>), <code class="docutils literal notranslate"><span class="pre">past_covariates</span></code> and / or <code class="docutils literal notranslate"><span class="pre">future_covariates</span></code>. When using covariates you have to supply one dedicated past and / or future covariates series for each target series.</p>
+<p>Optionally, you can use a validation set with dedicated covariates during training. If the covariates have the required time spans, you can use the same for training, validation and prediction. (covered in <a class="reference external" href="#required-target-time-spans-for-training-validation-and-prediction">this subsection</a>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit the model on a single target series with optional past and / or future covariates</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">target</span><span class="p">,</span>
+          <span class="n">past_covariates</span><span class="o">=</span><span class="n">past_covariates</span><span class="p">,</span>
+          <span class="n">future_covariates</span><span class="o">=</span><span class="n">future_covariates</span><span class="p">,</span>
+          <span class="n">val_series</span><span class="o">=</span><span class="n">target_val</span><span class="p">,</span>  <span class="c1"># optionally, use a validation set</span>
+          <span class="n">val_past_covariates</span><span class="o">=</span><span class="n">past_covariates_val</span><span class="p">,</span>
+          <span class="n">val_future_covariates</span><span class="o">=</span><span class="n">future_covariates_val</span><span class="p">)</span>
+
+<span class="c1"># fit the model on multiple target series</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">([</span><span class="n">target</span><span class="p">,</span> <span class="n">target2</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+          <span class="n">past_covariates</span><span class="o">=</span><span class="p">[</span><span class="n">past_covariates</span><span class="p">,</span> <span class="n">past_covariates2</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+          <span class="o">...</span>
+          <span class="p">)</span>
+</pre></div>
+</div>
+<p>You can produce forecasts for any input <code class="docutils literal notranslate"><span class="pre">target</span></code> TimeSeries or for several targets given as a sequence of TimeSeries. This will also work on series that have not been seen during training, as long as each series contains at least <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span></code> time steps.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># predict the next n=3 time steps for any input series with `series`</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                           <span class="n">series</span><span class="o">=</span><span class="n">target</span><span class="p">,</span>
+                           <span class="n">past_covariates</span><span class="o">=</span><span class="n">past_covariates</span><span class="p">,</span>
+                           <span class="n">future_covariates</span><span class="o">=</span><span class="n">future_covariates</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to know more about the training and prediction process of our Torch Forecasting Models and how they work with covariates, read on.</p>
+</section>
+<section id="top-level-look-at-training-and-predicting-with-chunks">
+<h2>Top level look at training and predicting with chunks<a class="headerlink" href="#top-level-look-at-training-and-predicting-with-chunks" title="Permalink to this headline">¶</a></h2>
+<p>In Figure 1 you can see how your data is distributed to the input and output chunks for each sample when calling <code class="docutils literal notranslate"><span class="pre">fit()</span></code> or <code class="docutils literal notranslate"><span class="pre">predict()</span></code>. For this example we look at data with daily frequency. The input chunk extracts values from <code class="docutils literal notranslate"><span class="pre">target</span></code> and optionally from <code class="docutils literal notranslate"><span class="pre">past_covariates</span></code> and / or <code class="docutils literal notranslate"><span class="pre">future_covariates</span></code> that fall into the input chunk time span. These “past” values of <code class="docutils literal notranslate"><span class="pre">future_covariates</span></code> are called “historic future covariates”.</p>
+<p>The output chunk only takes optional <code class="docutils literal notranslate"><span class="pre">future_covariates</span></code> values that fall into the output chunk time span. The future values of our <code class="docutils literal notranslate"><span class="pre">past_covariates</span></code> - “future past covariates” - are only used to provide the input chunk of upcoming samples with new data.</p>
+<p>All this information is used to predict the “future target” - the next <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code> points after the end of “past target”.</p>
+<a class="reference external image-reference" href="./images/covariates/tfm.png"><img alt="figure0" src="../_images/tfm.png" /></a>
+<p><strong>Figure 1: Top level look at training / predicting on chunks with Torch Forecasting Models</strong></p>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">predict()</span></code> and depending on your forecast horizon <code class="docutils literal notranslate"><span class="pre">n</span></code>, the model can either predict in one go (if <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&lt;=</span> <span class="pre">output_chunk_length</span></code>), or auto-regressively, by predicting on multiple chunks in the future (if <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">output_chunk_length</span></code>). That is the reason why when predicting with <code class="docutils literal notranslate"><span class="pre">past_covariates</span></code> you might have to supply additional “future values of your <code class="docutils literal notranslate"><span class="pre">past_covariates</span></code>“.</p>
+</section>
+<section id="torch-forecasting-model-covariates-support">
+<h2>Torch Forecasting Model Covariates Support<a class="headerlink" href="#torch-forecasting-model-covariates-support" title="Permalink to this headline">¶</a></h2>
+<p>Under the hood, Darts has 5 types of <code class="docutils literal notranslate"><span class="pre">{X}CovariatesModel</span></code> classes implemented to cover different combinations of the covariate types mentioned before:</p>
+<p><strong>Table 1: Darts’ “{X}CovariatesModels” covariate support</strong></p>
+<p>Each Torch Forecasting Model inherits from one <code class="docutils literal notranslate"><span class="pre">{X}CovariatesModel</span></code> (covariate class names are abbreviated by the <code class="docutils literal notranslate"><span class="pre">X</span></code>-part):</p>
+<p><strong>Table 2: Darts’ Torch Forecasting Model covariate support</strong></p>
+</section>
+<section id="required-target-time-spans-for-training-validation-and-prediction">
+<h2>Required target time spans for training, validation and prediction<a class="headerlink" href="#required-target-time-spans-for-training-validation-and-prediction" title="Permalink to this headline">¶</a></h2>
+<p>The relevant data is extracted automatically by the models, based on the time axes of the series.
+You can use the same covariates series for both <code class="docutils literal notranslate"><span class="pre">fit()</span></code> and <code class="docutils literal notranslate"><span class="pre">predict()</span></code> if they meet the requirements below.</p>
+<p><strong>Training</strong> only works if at least one sample with an input and output chunk can be extracted from the data you passed to <code class="docutils literal notranslate"><span class="pre">fit()</span></code>. This applies both to training and validation data. In terms of minimum required time spans, this means:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code> series of minimum length <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span> <span class="pre">+</span> <span class="pre">output_chunk_length</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_covariates</span></code> time span requirements for <code class="docutils literal notranslate"><span class="pre">fit()</span></code> from <a class="reference external" href="https://unit8co.github.io/darts/userguide/covariates.html#id6">covariates guide section 2.3.</a></p></li>
+</ul>
+<p>For <strong>prediction</strong> you have to supply the <code class="docutils literal notranslate"><span class="pre">target</span></code> series that you wish to forecast. For any forecast horizon <code class="docutils literal notranslate"><span class="pre">n</span></code> the minimum time span requirements are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code> series of minimum length <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_covariates</span></code> time span requirements for <code class="docutils literal notranslate"><span class="pre">predict()</span></code> also from from <a class="reference external" href="https://unit8co.github.io/darts/userguide/covariates.html#id6">covariates guide section 2.3.</a></p></li>
+</ul>
+<p>Side note: Our <code class="docutils literal notranslate"><span class="pre">*RNNModels</span></code> accept a <code class="docutils literal notranslate"><span class="pre">training_length</span></code> parameter at model creation instead of <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code>. Internally the <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code> for these models is automatically set to <code class="docutils literal notranslate"><span class="pre">1</span></code>. For training, past <code class="docutils literal notranslate"><span class="pre">target</span></code> must have a minimum length of <code class="docutils literal notranslate"><span class="pre">training_length</span> <span class="pre">+</span> <span class="pre">1</span></code> and for prediction, a length of <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span></code>.</p>
+</section>
+<section id="in-depth-look-at-how-input-data-is-used-when-training-and-predicting-with-tfms">
+<h2>In-depth look at how input data is used when training and predicting with TFMs<a class="headerlink" href="#in-depth-look-at-how-input-data-is-used-when-training-and-predicting-with-tfms" title="Permalink to this headline">¶</a></h2>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>Let’s have a look at how the models work under the hood.</p>
+<p>Let’s assume we run an ice-cream shop and we want to predict sales for the next day.
+We have one year (365 days) past data of our end-of-day ice-cream sales and of the average measured daily ambient temperature.
+We also noticed that our ice-cream sales depend on the day of the week so we want to include this in our model.</p>
+<ul class="simple">
+<li><p>past target: actual past ice-cream sales <code class="docutils literal notranslate"><span class="pre">ice_cream_sales</span></code></p></li>
+<li><p>future target: predict the ice-cream sales for the next day</p></li>
+<li><p>past covariates: measured average daily temperatures in the past <code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></li>
+<li><p>future covariates: day of the week for past and future <code class="docutils literal notranslate"><span class="pre">weekday</span></code></p></li>
+</ul>
+<p>Checking Table 1, a model that would accommodate this kind of covariates would be a
+<code class="docutils literal notranslate"><span class="pre">SplitCovariatesModel</span></code> (if we don’t use historic values of future covariates), or
+<code class="docutils literal notranslate"><span class="pre">MixedCovariatesModel</span></code> (if we do). We choose a <code class="docutils literal notranslate"><span class="pre">MixedCovariatesModel</span></code> - the <code class="docutils literal notranslate"><span class="pre">TFTModel</span></code>.</p>
+<p>Imagine that we saw a pattern in our past ice cream sales that repeated week after week.
+So we set <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span> <span class="pre">=</span> <span class="pre">7</span></code> days to let the model look back an entire week into the past.
+The <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code> can be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> day to predict the next day.</p>
+<p>Now we can create a model and train it! Figure 2 shows you how <code class="docutils literal notranslate"><span class="pre">TFTModel</span></code> will use our data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">TFTModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TFTModel</span><span class="p">(</span><span class="n">input_chunk_length</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">output_chunk_length</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">series</span><span class="o">=</span><span class="n">ice_cream_sales</span><span class="p">,</span>
+          <span class="n">past_covariates</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+          <span class="n">future_covariates</span><span class="o">=</span><span class="n">weekday</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="./images/covariates/seq_covs_single.png"><img alt="figure4" src="../_images/seq_covs_single.png" /></a>
+<p><strong>Figure 2: Overview of a single sequence from our ice-cream sales example</strong>; Mon1 - Sun1 stand for the first 7 days from our training dataset (week 1 of the year). Mon2 is the Monday of week 2.</p>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">fit()</span></code>, the models will build an appropriate <code class="docutils literal notranslate"><span class="pre">darts.utils.data.TrainingDataset</span></code>, which specifies how to slice the data to obtain training samples. If you want to control this slicing yourself, you can instantiate your own <code class="docutils literal notranslate"><span class="pre">TrainingDataset</span></code> and call <code class="docutils literal notranslate"><span class="pre">model.fit_from_dataset()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">fit()</span></code>. By default, most models (though not all) will build <em>sequential</em> datasets, which basically means that all sub-slices of length <code class="docutils literal notranslate"><span class="pre">input_chunk_length</span> <span class="pre">+</span> <span class="pre">output_chunk_length</span></code> in the provided series will be used for training.</p>
+<p>So during training, the torch models will go through the training data in sequences (see Figure 3). Using information from the <strong>input chunk</strong> and <strong>output chunk</strong>, the model predicts the future target on the output chunk. The training loss is evaluated between the predicted future target and the actual target value on the output chunk. The model trains itself by minimizing the loss over all sequences.</p>
+<a class="reference external image-reference" href="./images/covariates/seq_covs_1.png"><img alt="figure5" src="../_images/seq_covs_1.png" /></a>
+<p><strong>Figure 3: Prediction and loss evaluation in a single sequence</strong></p>
+<p>After having completed computations on the first sequence, the model moves to the next one and performs the same training steps. <em>The starting point of each sequence is selected randomly from the sequential dataset</em>. Figure 4 shows how this would look like if by pure chance the second sequence started one time step (day) after the first.</p>
+<p>This sequence-to-sequence process is repeated until all 365 days were covered.</p>
+<p>Side note: Having “long” <code class="docutils literal notranslate"><span class="pre">target</span></code> series can result in a very large number of training sequences / samples. You can set an upper bound for the number of sequences / samples per <code class="docutils literal notranslate"><span class="pre">target</span></code> that the model should be trained on with <code class="docutils literal notranslate"><span class="pre">fit()</span></code>-parameter <code class="docutils literal notranslate"><span class="pre">max_samples_per_ts</span></code>. This will take the most recent sequences for every <code class="docutils literal notranslate"><span class="pre">target</span></code> series (sequences closest to <code class="docutils literal notranslate"><span class="pre">target</span></code> end).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit only on the 10 &quot;most recent&quot; sequences</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">max_samples_per_ts</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="./images/covariates/sequential_training.png"><img alt="figure6" src="../_images/sequential_training.png" /></a>
+<p><strong>Figure 4: Sequence-to-sequence: Move to next sequence and repeat training steps</strong></p>
+</section>
+<section id="training-with-a-validation-dataset">
+<h3>Training with a validation dataset<a class="headerlink" href="#training-with-a-validation-dataset" title="Permalink to this headline">¶</a></h3>
+<p>You can also train your models with a validation dataset:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create train and validation sets</span>
+<span class="n">ice_cream_sales_train</span><span class="p">,</span> <span class="n">ice_cream_sales_val</span> <span class="o">=</span> <span class="n">ice_cream_sales</span><span class="o">.</span><span class="n">split_after</span><span class="p">(</span><span class="n">training_cutoff</span><span class="p">)</span>
+
+<span class="c1"># train with validation set</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">series</span><span class="o">=</span><span class="n">ice_cream_sales_train</span><span class="p">,</span>
+          <span class="n">past_covariates</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+          <span class="n">future_covariates</span><span class="o">=</span><span class="n">weekday</span><span class="p">,</span>
+          <span class="n">val_series</span><span class="o">=</span><span class="n">ice_cream_sales_val</span><span class="p">,</span>
+          <span class="n">val_past_covariates</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+          <span class="n">val_future_covariates</span><span class="o">=</span><span class="n">weekday</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you split your data, you have to define a <code class="docutils literal notranslate"><span class="pre">training_cutoff</span></code> (a date or fraction at which to split the dataset) so that both the train and validation datasets satisfy the minimum length requirements
+from <a class="reference external" href="#required-target-time-spans-for-training-validation-and-prediction">this subsection</a></p>
+<p>Instead of splitting by time, you can also use another subset of time series as validation set.</p>
+<p>The model trains itself the same way as before but additionally evaluates the loss on the validation dataset. If you want to keep track of the best performing model on the validation set, you have to enable checkpoint saving as shown next.</p>
+</section>
+</section>
+<section id="id4">
+<h2>Forecast/Prediction<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>After having trained the model, we want to predict the future ice-cream sales for any number of days after our 365 days training data.</p>
+<p>The actual prediction works very similar to how we trained the data on sequences. Depending on the number of days we want to predict - the forecast horizon <code class="docutils literal notranslate"><span class="pre">n</span></code> - we distinguish between two cases:</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&lt;=</span> <span class="pre">output_chunk_length</span></code>: we can predict <code class="docutils literal notranslate"><span class="pre">n</span></code> in one go (using one “internal model call”)</p>
+<ul class="simple">
+<li><p>in our example: predict the next day’s ice-cream sales (<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">1</span></code>)</p></li>
+</ul>
+</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">output_chunk_length</span></code>: we must predict <code class="docutils literal notranslate"><span class="pre">n</span></code> by calling the internal model multiple times. Each call outputs <code class="docutils literal notranslate"><span class="pre">output_chunk_length</span></code> prediction points. We go through as many calls as needed until we get to the final <code class="docutils literal notranslate"><span class="pre">n</span></code> prediction points, in an auto-regressive fashion.</p>
+<ul class="simple">
+<li><p>in our example: predict ice-cream sales for the next 3 days at once (<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">3</span></code>)</p></li>
+</ul>
+<p>To do this we have to supply additional <code class="docutils literal notranslate"><span class="pre">past_covariates</span></code> for the next <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">output_chunk_length</span> <span class="pre">=</span> <span class="pre">2</span></code> time steps (days) after the end of our 365 days training data. Unfortunately, we do not have measured <code class="docutils literal notranslate"><span class="pre">temperature</span></code> for the future. But let’s assume we have access to temperature forecasts for the next 2 days. We can just append them to <code class="docutils literal notranslate"><span class="pre">temperature</span></code> and the prediction will work!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">temperature_forecast</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+                           <span class="n">series</span><span class="o">=</span><span class="n">ice_cream_sales_train</span><span class="p">,</span>
+                           <span class="n">past_covariates</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+                           <span class="n">future_covariates</span><span class="o">=</span><span class="n">weekday</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="./images/covariates/prediction_once.png"><img alt="figure7" src="../_images/prediction_once.png" /></a>
+<p><a href="#id5"><span class="problematic" id="id6">**</span></a>Figure 5: Forecast with a single sequence for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&lt;=</span> <span class="pre">output_chunk_length</span></code>**</p>
+<a class="reference external image-reference" href="./images/covariates/prediction_multi.png"><img alt="figure8" src="../_images/prediction_multi.png" /></a>
+<p><a href="#id7"><span class="problematic" id="id8">**</span></a>Figure 6: Auto-regressive forecast for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">output_chunk_length</span></code>**</p>
+</section>
+<section id="advanced-functionnalities">
+<h2>Advanced Functionnalities<a class="headerlink" href="#advanced-functionnalities" title="Permalink to this headline">¶</a></h2>
+<section id="saving-and-loading-model-states">
+<h3>Saving and Loading Model States<a class="headerlink" href="#saving-and-loading-model-states" title="Permalink to this headline">¶</a></h3>
+<p>❗ Warning ❗ At this stage of Darts development, we are not (yet) ensuring backward compatibility, so it might not always be possible to load a model saved by an older version of the library.</p>
+<p>For models trained on GPU with versions of Darts &lt;= 0.22.0 that need to be loaded on CPU with a version of Darts &gt;= 0.23.0, please look at the code snipped provided in this <a class="reference external" href="https://github.com/unit8co/darts/issues/1245">issue</a>.</p>
+<section id="automatic-checkpointing">
+<h4>Automatic checkpointing<a class="headerlink" href="#automatic-checkpointing" title="Permalink to this headline">¶</a></h4>
+<p>Automic checkpointing during training allows you to:</p>
+<ul class="simple">
+<li><p>keep track of the model state over the latest 5 epochs, and the best performing epoch based on the validation set loss</p></li>
+<li><p>load a model from checkpoint to resume training in case it was interrupted</p></li>
+<li><p>load a model from checkpoint for inference / forecasting</p></li>
+</ul>
+<p>You can activate checkpointing at model creation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;my_model&#39;</span><span class="p">,</span> <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># checkpoints are saved automatically</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># load the model state that performed best on validation set</span>
+<span class="n">best_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">load_from_checkpoint</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;my_model&#39;</span><span class="p">,</span> <span class="n">best</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h4>Manual saving / loading<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>You can also manually save the model at its current state and load it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;/your/path/to/save/model.pt&quot;</span><span class="p">)</span>
+<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/your/path/to/save/model.pt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="training-saving-on-gpu-and-loading-on-cpu">
+<h4>Training/Saving on GPU and loading on CPU<a class="headerlink" href="#training-saving-on-gpu-and-loading-on-cpu" title="Permalink to this headline">¶</a></h4>
+<p>You can load a model to CPU that was trained and saved on GPU (see detailed <a class="reference external" href="https://unit8co.github.io/darts/userguide/gpu_and_tpu_usage.html">documentation</a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a model using gpu as accelerator</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>
+                                  <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;my_model&#39;</span><span class="p">,</span>
+                                  <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">pl_trainer_kwargs</span><span class="o">=</span><span class="p">{</span>
+                                                     <span class="s2">&quot;accelerator&quot;</span><span class="p">:</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+                                                     <span class="s2">&quot;devices&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                                     <span class="p">})</span>
+
+<span class="c1"># train the model, automatic checkpoints will be created</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># specify the device to which the model should be loaded</span>
+<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="o">.</span><span class="n">load_from_checkpoint</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;my_model&#39;</span><span class="p">,</span>
+                                                              <span class="n">best</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                              <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">loaded_model</span><span class="o">.</span><span class="n">to_cpu</span><span class="p">()</span>
+
+<span class="c1"># run inference</span>
+<span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Manual saves can also be loaded to CPU:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;/your/path/to/save/model.pt&quot;</span><span class="p">)</span>
+<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/your/path/to/save/model.pt&quot;</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">loaded_model</span><span class="o">.</span><span class="n">to_cpu</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="re-training-or-fine-tuning-a-pre-trained-model">
+<h4>Re-training or fine-tuning a pre-trained model<a class="headerlink" href="#re-training-or-fine-tuning-a-pre-trained-model" title="Permalink to this headline">¶</a></h4>
+<p>To re-train or fine-tune a model using a different optimizer and/or learning rate scheduler, you can load the weights from the automatic checkpoints into a new model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># model with identical architecture but different optimizer (default: torch.optim.Adam)</span>
+<span class="n">model_finetune</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>  <span class="c1"># use identical parameters &amp; values as in original model</span>
+                                           <span class="n">optimizer_cls</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">,</span>
+                                           <span class="n">optimizer_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">})</span>
+
+<span class="c1"># load the weights from a checkpoint</span>
+<span class="n">model_finetune</span><span class="o">.</span><span class="n">load_weights_from_checkpoint</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;my_model&#39;</span><span class="p">,</span> <span class="n">best</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">model_finetune</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and similarly for manual saves and the learning rate scheduler:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># model with identical architecture but different lr scheduler (default: None)</span>
+<span class="n">model_finetune</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span><span class="o">...</span><span class="p">,</span>  <span class="c1"># use identical parameters &amp; values as in original model</span>
+                                           <span class="n">lr_scheduler_cls</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">ExponentialLR</span><span class="p">,</span>
+                                           <span class="n">lr_scheduler_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">0.09</span><span class="p">})</span>
+
+<span class="c1"># load the weights from a manual save</span>
+<span class="n">model_finetune</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="s2">&quot;/your/path/to/save/model.pt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h3>Callbacks<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>Callbacks are a powerful way to monitor or control the behavior of the model during the training process. Some examples:</p>
+<ul class="simple">
+<li><p>Performance Monitoring: compute additional metrics (in addition of the default losses)</p></li>
+<li><p>Early stopping: stop the training once the model has converged</p></li>
+<li><p>…</p></li>
+</ul>
+<p>With callbacks you can add custom code to an existing process at predefined points / hooks.
+The code is triggered once the process execution reaches the corresponding hooks. Some example hooks:</p>
+<ul class="simple">
+<li><p>beginning / end of training</p></li>
+<li><p>beginning / end of train / validation step</p></li>
+<li><p>…</p></li>
+</ul>
+<p>Some useful predefined PyTorch Lightning callbacks can be found <a class="reference external" href="https://lightning.ai/docs/pytorch/stable/extensions/callbacks.html#built-in-callbacks">here</a>.</p>
+<section id="example-with-early-stopping">
+<h4>Example with Early Stopping<a class="headerlink" href="#example-with-early-stopping" title="Permalink to this headline">¶</a></h4>
+<p>Early stopping is an efficient way to avoid overfitting and reduce training time.
+It will exit the training process once the validation loss has not significantly improved over some epochs.</p>
+<p>You can use Early Stopping with any <code class="docutils literal notranslate"><span class="pre">TorchForecastingModel</span></code>, leveraging PyTorch Lightning’s <a class="reference external" href="https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping">EarlyStopping</a> callback:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
+<span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">MeanAbsolutePercentageError</span>
+
+<span class="kn">from</span> <span class="nn">darts.dataprocessing.transformers</span> <span class="kn">import</span> <span class="n">Scaler</span>
+<span class="kn">from</span> <span class="nn">darts.datasets</span> <span class="kn">import</span> <span class="n">AirPassengersDataset</span>
+<span class="kn">from</span> <span class="nn">darts.models</span> <span class="kn">import</span> <span class="n">NBEATSModel</span>
+
+<span class="c1"># read data</span>
+<span class="n">series</span> <span class="o">=</span> <span class="n">AirPassengersDataset</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c1"># create training and validation sets:</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">split_after</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">1957</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># normalize the time series</span>
+<span class="n">transformer</span> <span class="o">=</span> <span class="n">Scaler</span><span class="p">()</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+<span class="c1"># any TorchMetric or val_loss can be used as the monitor</span>
+<span class="n">torch_metrics</span> <span class="o">=</span> <span class="n">MeanAbsolutePercentageError</span><span class="p">()</span>
+
+<span class="c1"># early stop callback</span>
+<span class="n">my_stopper</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
+    <span class="n">monitor</span><span class="o">=</span><span class="s2">&quot;val_MeanAbsolutePercentageError&quot;</span><span class="p">,</span>  <span class="c1"># &quot;val_loss&quot;,</span>
+    <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">min_delta</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">pl_trainer_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;callbacks&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">my_stopper</span><span class="p">]}</span>
+
+<span class="c1"># create the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">NBEATSModel</span><span class="p">(</span>
+    <span class="n">input_chunk_length</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+    <span class="n">output_chunk_length</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">n_epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">torch_metrics</span><span class="o">=</span><span class="n">torch_metrics</span><span class="p">,</span>
+    <span class="n">pl_trainer_kwargs</span><span class="o">=</span><span class="n">pl_trainer_kwargs</span><span class="p">)</span>
+
+<span class="c1"># use validation set for early stopping</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">series</span><span class="o">=</span><span class="n">train</span><span class="p">,</span>
+    <span class="n">val_series</span><span class="o">=</span><span class="n">val</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To use early-stopping and pruning in the context of hyperparameter optimization, check out <a class="reference external" href="https://unit8co.github.io/darts/userguide/hyperparameter_optimization.html">this guide</a>.</p>
+</section>
+<section id="example-of-custom-callback-to-store-losses">
+<h4>Example of custom callback to store losses<a class="headerlink" href="#example-of-custom-callback-to-store-losses" title="Permalink to this headline">¶</a></h4>
+<p>Training and validation loss can be automatically logged with <a class="reference external" href="https://www.tensorflow.org/tensorboard">tensorboard</a>. When activated, Darts will by default store the logs to a folder <code class="docutils literal notranslate"><span class="pre">darts_logs</span></code> in the current working directory. You can change this with model parameters <code class="docutils literal notranslate"><span class="pre">work_dir</span></code>, and <code class="docutils literal notranslate"><span class="pre">model_name</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">log_tensorboad</span><span class="p">,</span> <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After installing the tensorboard library, you can visualize the logs from the command line:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboad<span class="w"> </span>--log_dir<span class="w"> </span>darts_logs
+</pre></div>
+</div>
+<p>Let’s check out how to implement a <strong>custom callback</strong> to make the model losses accessible in Python.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+
+<span class="k">class</span> <span class="nc">LossLogger</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_loss</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_loss</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># will automatically be called at the end of each epoch</span>
+    <span class="k">def</span> <span class="nf">on_train_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="s2">&quot;pl.Trainer&quot;</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="s2">&quot;pl.LightningModule&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">callback_metrics</span><span class="p">[</span><span class="s2">&quot;train_loss&quot;</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">on_validation_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">:</span> <span class="s2">&quot;pl.Trainer&quot;</span><span class="p">,</span> <span class="n">pl_module</span><span class="p">:</span> <span class="s2">&quot;pl.LightningModule&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">callback_metrics</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">]))</span>
+
+
+<span class="n">loss_logger</span> <span class="o">=</span> <span class="n">LossLogger</span><span class="p">()</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SomeTorchForecastingModel</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">nr_epochs_val_period</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># perform validation after every epoch</span>
+    <span class="n">pl_trainer_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;callbacks&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">loss_logger</span><span class="p">]}</span>
+<span class="p">)</span>
+
+<span class="c1"># fit must include validation set for &quot;val_loss&quot;</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Note</em> : The callback will give one more element in the <code class="docutils literal notranslate"><span class="pre">loss_logger.val_loss</span></code> as the model trainer performs a validation sanity check before the training begins.</p>
+</section>
+</section>
+</section>
+<section id="performance-recommendations">
+<h2>Performance Recommendations<a class="headerlink" href="#performance-recommendations" title="Permalink to this headline">¶</a></h2>
+<p>This section recaps the main factors impacting the performance when
+training and using torch-based models.</p>
+<section id="build-your-timeseries-using-32-bits-data">
+<h3>Build your <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> using 32-bits data<a class="headerlink" href="#build-your-timeseries-using-32-bits-data" title="Permalink to this headline">¶</a></h3>
+<p>The models in Darts will dynamically cast themselves (to 64 or 32-bits)
+to follow the dtype in the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>. Large performance and memory gains
+can often be obtained when everything (data and model) is in float32.
+To achieve this, it is enough to build your <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> from arrays (or Dataframe-backing array) having dtype <code class="docutils literal notranslate"><span class="pre">np.float32</span></code>, or simply call <code class="docutils literal notranslate"><span class="pre">my_series32</span> <span class="pre">=</span> <span class="pre">my_series.astype(np.float32)</span></code>. Calling <code class="docutils literal notranslate"><span class="pre">my_series.dtype</span></code> gives you the dtype of your <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>.</p>
+</section>
+<section id="use-a-gpu">
+<h3>Use a GPU<a class="headerlink" href="#use-a-gpu" title="Permalink to this headline">¶</a></h3>
+<p>In many cases using a GPU will provide a drastic speedup compared to CPU.
+It can also incur some overheads (for transferring data to/from the GPU),
+so some testing and tuning is often necessary.
+We refer to our <a class="reference external" href="https://unit8co.github.io/darts/userguide/gpu_and_tpu_usage.html">GPU/TPU guide</a>
+for more information on how to setup a GPU (or a TPU) via PyTorch Lightning.</p>
+</section>
+<section id="tune-the-batch-size">
+<h3>Tune the batch size<a class="headerlink" href="#tune-the-batch-size" title="Permalink to this headline">¶</a></h3>
+<p>A larger batch size tends to speed up the training because it reduces the number
+of backward passes per epoch and has the potential to better parallelize computation. However it also changes the training dynamics (e.g. you might need more epochs, and the convergence dynamics is affected). Furthermore larger batch sizes increase memory consumption. So here too some testing is required.</p>
+</section>
+<section id="tune-num-loader-workers">
+<h3>Tune <code class="docutils literal notranslate"><span class="pre">num_loader_workers</span></code><a class="headerlink" href="#tune-num-loader-workers" title="Permalink to this headline">¶</a></h3>
+<p>All deep learning models in Darts have a parameter <code class="docutils literal notranslate"><span class="pre">num_loader_workers</span></code> in their <code class="docutils literal notranslate"><span class="pre">fit()</span></code> and <code class="docutils literal notranslate"><span class="pre">predict()</span></code> functions, which
+configures the <code class="docutils literal notranslate"><span class="pre">num_workers</span></code> parameter in the PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoaders</span></code>. By default
+it is set to 0, which means that the main process will also take care of loading the data. Setting <code class="docutils literal notranslate"><span class="pre">num_workers</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> will use additional workers to load the data. This typically incurs some overhead (notably increasing memory consumption), but in some cases it can also substantially improve performance.
+The ideal value depends on many factors such as the batch size, whether you are using a GPU, the number of CPU cores available, and whether
+loading the data involved I/O operations (if the series are stored on disk).</p>
+</section>
+<section id="small-models-first">
+<h3>Small models first<a class="headerlink" href="#small-models-first" title="Permalink to this headline">¶</a></h3>
+<p>Of course one of the main factors affecting performance is the model size
+(number of parameters) and the number of operations required by forward/backward passes. Models in Darts can be tuned (e.g. number of layers, attention heads, widths etc), and these hyper-parameters tend to have a large impact on performance. When starting out, it is a good idea to build models of modest size first.</p>
+</section>
+<section id="data-in-memory-and-i-o-bottlenecks">
+<h3>Data in Memory and I/O bottlenecks<a class="headerlink" href="#data-in-memory-and-i-o-bottlenecks" title="Permalink to this headline">¶</a></h3>
+<p>It’s helpful to load all your <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> in memory upfront if you can.
+Darts offers the possibility to train models on any <code class="docutils literal notranslate"><span class="pre">Sequence[TimeSeries]</span></code>,
+which means that for big datasets, you can write your own <code class="docutils literal notranslate"><span class="pre">Sequence</span></code> implementation, and read the time series lazily from disk. This will typically incur a high I/O cost, though. So when training on multiple series, first try to build a simple <code class="docutils literal notranslate"><span class="pre">List[TimeSeries]</span></code> upfront, and see if it holds in the computer memory.</p>
+</section>
+<section id="do-not-use-all-possible-sub-series-for-training">
+<h3>Do not use <em>all</em> possible sub-series for training<a class="headerlink" href="#do-not-use-all-possible-sub-series-for-training" title="Permalink to this headline">¶</a></h3>
+<p>By default, when calling <code class="docutils literal notranslate"><span class="pre">fit()</span></code>, the models in Darts will build a <code class="docutils literal notranslate"><span class="pre">TrainingDataset</span></code> instance that is
+suitable for the model that you are using (e.g., <code class="docutils literal notranslate"><span class="pre">PastCovariatesTorchModel</span></code>, <code class="docutils literal notranslate"><span class="pre">FutureCovariatesTorchModel</span></code>, etc.).
+By default, these training datasets will often contain <em>all</em> possible consecutive (input, output) subseries present
+in each <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code>. If your <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> are long, this can result in a large amount of training samples, which directly (linearly)
+impacts the time required to train the model for one epoch. You have two options to limit this:</p>
+<ul class="simple">
+<li><p>Specify some <code class="docutils literal notranslate"><span class="pre">max_samples_per_ts</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> function. This will use only the most recent <code class="docutils literal notranslate"><span class="pre">max_samples_per_ts</span></code> samples
+per <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> for training.</p></li>
+<li><p>If this option does not do what you want, you can implement your own <code class="docutils literal notranslate"><span class="pre">TrainingDataset</span></code> instance, and define
+how to slice your <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> for training yourself. We suggest to have a look at <a class="reference external" href="https://github.com/unit8co/darts/tree/master/darts/utils/data">this submodule</a>
+to see examples of how to do it.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="example-benchmark">
+<h3>Example Benchmark<a class="headerlink" href="#example-benchmark" title="Permalink to this headline">¶</a></h3>
+<p>As an example, we show here the time required to train one epoch on the first 80% of the energy dataset (<code class="docutils literal notranslate"><span class="pre">darts.datasets.EnergyDataset</span></code>), which consists of one multivariate series that is 28050 timesteps long and has 28 dimensions.
+We train two models; <code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code> and <code class="docutils literal notranslate"><span class="pre">TFTModel</span></code>, with default parameters and <code class="docutils literal notranslate"><span class="pre">input_chunk_length=48</span></code> and <code class="docutils literal notranslate"><span class="pre">output_chunk_length=12</span></code> (which results in 27991 training samples with default sequential training datasets). For the TFT model, we also set the parameter <code class="docutils literal notranslate"><span class="pre">add_cyclic_encoder='hour'</span></code>. The tests are made on a Intel CPU i9-10900K CPU &#64; 3.70GHz, with an Nvidia RTX 2080s GPU, 32 GB of RAM. All <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> are pre-loaded in memory and given to the models as a list.</p>
+<table class="table">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Dataset</p></th>
+<th class="head"><p>dtype</p></th>
+<th class="head"><p>CUDA</p></th>
+<th class="head"><p>Batch size</p></th>
+<th class="head"><p>num workers</p></th>
+<th class="head"><p>time per epoch</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>283s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>285s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>4</p></td>
+<td><p>282s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>58s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>57s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>58s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>63s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>62s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>13.3s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>12.1s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>12.3s</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>117s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>115s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>4</p></td>
+<td><p>117s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>28.4s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>27.4s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>27.5s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>41.5s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>40.6s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>2.8s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>1.65</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NBEATSModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>1.8s</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>78s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>72s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>4</p></td>
+<td><p>72s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>46s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>38s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>39s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>125s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>115s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>59s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>50s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>64</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>50s</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>70s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>62.6s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>32</p></td>
+<td><p>4</p></td>
+<td><p>63.6</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>31.9s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>45s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>no</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>44s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>0</p></td>
+<td><p>73s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>32</p></td>
+<td><p>2</p></td>
+<td><p>58s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>0</p></td>
+<td><p>41s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>2</p></td>
+<td><p>31s</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TFTModel</span></code></p></td>
+<td><p>Energy</p></td>
+<td><p>32</p></td>
+<td><p>yes</p></td>
+<td><p>1024</p></td>
+<td><p>4</p></td>
+<td><p>31s</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="forecasting_overview.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Overview of Forecasting Models</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="gpu_and_tpu_usage.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using Torch Models with GPUs and TPUs</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2020 - 2023, Unit8 SA (Apache 2.0 License).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
