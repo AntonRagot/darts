@@ -15,7 +15,7 @@ from darts.models.forecasting.pl_forecasting_module import (
     PLPastCovariatesModule,
     io_processor,
 )
-from darts.models.forecasting.torch_forecasting_model import PastCovariatesTorchModel
+from darts.models.forecasting.torch_forecasting_model import MixedCovariatesTorchModel
 from darts.utils.torch import MonteCarloDropout
 
 logger = get_logger(__name__)
@@ -534,7 +534,7 @@ class _NBEATSModule(PLPastCovariatesModule):
         return y
 
 
-class NBEATSModel(PastCovariatesTorchModel):
+class NBEATSModel(MixedCovariatesTorchModel):
     def __init__(
         self,
         input_chunk_length: int,
