@@ -12,7 +12,7 @@ import torch.nn as nn
 
 from darts.logging import get_logger, raise_if_not, raise_log
 from darts.models.forecasting.pl_forecasting_module import (
-    PLPastCovariatesModule,
+    PLMixedCovariatesModule,
     io_processor,
 )
 from darts.models.forecasting.torch_forecasting_model import MixedCovariatesTorchModel
@@ -39,6 +39,7 @@ class _GType(Enum):
     GENERIC = 1
     TREND = 2
     SEASONALITY = 3
+    EXOGENOUS = 4
 
 
 GTypes = NewType("GTypes", _GType)
@@ -79,6 +80,25 @@ class _SeasonalityGenerator(nn.Module):
         # basis is of size (2 * int(target_length / 2 - 1) + 1, target_length)
         basis = torch.stack(
             [torch.ones(target_length)] + cos_vectors + sin_vectors, dim=1
+        ).T
+
+        self.basis = nn.Parameter(basis, requires_grad=False)
+
+    def forward(self, x):
+        return torch.matmul(x, self.basis)
+
+
+class _ExogenousGenerator(nn.Module):
+    def __init__(self, expansion_coefficient_dim, target_length):
+        super().__init__()
+
+        # basis is of size (expansion_coefficient_dim, target_length)
+        basis = torch.stack(
+            [
+                (torch.arange(target_length) / target_length) ** i
+                for i in range(expansion_coefficient_dim)
+            ],
+            dim=1,
         ).T
 
         self.basis = nn.Parameter(basis, requires_grad=False)
@@ -205,6 +225,13 @@ class _Block(nn.Module):
         elif g_type == _GType.SEASONALITY:
             self.backcast_g = _SeasonalityGenerator(input_chunk_length)
             self.forecast_g = _SeasonalityGenerator(target_length)
+        elif g_type == _GType.EXOGENOUS:
+            self.backcast_g = _ExogenousGenerator(
+                expansion_coefficient_dim, input_chunk_length
+            )
+            self.forecast_g = _ExogenousGenerator(
+                expansion_coefficient_dim, target_length
+            )
         else:
             raise_log(ValueError("g_type not supported"), logger)
 
@@ -358,7 +385,7 @@ class _Stack(nn.Module):
         return stack_residual, stack_forecast
 
 
-class _NBEATSModule(PLPastCovariatesModule):
+class _NBEATSModule(PLMixedCovariatesModule):
     def __init__(
         self,
         input_dim: int,
@@ -457,7 +484,7 @@ class _NBEATSModule(PLPastCovariatesModule):
                 for i in range(num_stacks)
             ]
         else:
-            num_stacks = 2
+            num_stacks = 3
             trend_stack = _Stack(
                 num_blocks,
                 num_layers,
@@ -484,7 +511,20 @@ class _NBEATSModule(PLPastCovariatesModule):
                 dropout=self.dropout,
                 activation=self.activation,
             )
-            self.stacks_list = [trend_stack, seasonality_stack]
+            exogenous_stack = _Stack(
+                num_blocks,
+                num_layers,
+                layer_widths[2],
+                nr_params,
+                trend_polynomial_degree + 1,
+                self.input_chunk_length_multi,
+                self.target_length,
+                _GType.EXOGENOUS,
+                batch_norm=self.batch_norm,
+                dropout=self.dropout,
+                activation=self.activation,
+            )
+            self.stacks_list = [trend_stack, seasonality_stack, exogenous_stack]
 
         self.stacks = nn.ModuleList(self.stacks_list)
 
@@ -496,13 +536,30 @@ class _NBEATSModule(PLPastCovariatesModule):
 
     @io_processor
     def forward(self, x_in: tuple):
-        x, _ = x_in
+        x, exogenous_cov, _ = x_in
+
+        # print("before")
+        # print(x.shape)
+        # print(x)
+        if exogenous_cov is not None:
+            # print(exogenous_cov.shape)
+            # exogenous_cov = exogenous_cov.expand(-1, -1, 2)
+            # print("after")
+            # print(exogenous_cov.shape)
+
+            # Concatenate X and Y along the second dimension
+            # x = torch.cat((x, exogenous_cov), dim=1)
+            x = x[:, :, 1:2]
+            # print(x.shape)
 
         # if x1, x2,... y1, y2... is one multivariate ts containing x and y, and a1, a2... one covariate ts
         # we reshape into x1, y1, a1, x2, y2, a2... etc
         x = torch.reshape(x, (x.shape[0], self.input_chunk_length_multi, 1))
+        # print(x.shape)
         # squeeze last dimension (because model is univariate)
         x = x.squeeze(dim=2)
+
+        # print(x.shape)
 
         # One vector of length target_length per parameter in the distribution
         y = torch.zeros(
@@ -808,7 +865,7 @@ class NBEATSModel(MixedCovariatesTorchModel):
         self.activation = activation
 
         if not generic_architecture:
-            self.num_stacks = 2
+            self.num_stacks = 3
 
         if isinstance(layer_widths, int):
             self.layer_widths = [layer_widths] * self.num_stacks
@@ -818,7 +875,7 @@ class NBEATSModel(MixedCovariatesTorchModel):
         return True
 
     def _create_model(self, train_sample: tuple[torch.Tensor]) -> torch.nn.Module:
-        # samples are made of (past_target, past_covariates, future_target)
+        # samples are made of (past_target, past_covariates, future_covariates, future_target)
         input_dim = train_sample[0].shape[1] + (
             train_sample[1].shape[1] if train_sample[1] is not None else 0
         )

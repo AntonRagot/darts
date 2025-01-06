@@ -798,6 +798,19 @@ class PLMixedCovariatesModule(PLForecastingModule, ABC):
         ) = input_batch
         dim_variable = 2
 
+        # print("before concat")
+        # print("past target")
+        # print(past_target.shape)
+        # print(past_target)
+        # print("past cov")
+        # if past_covariates is not None:
+        #    print(past_covariates.shape)
+        #    print(past_covariates)
+        # print("hist future cov")
+        # if historic_future_covariates is not None:
+        #    print(historic_future_covariates.shape)
+        #    print(historic_future_covariates)
+
         x_past = torch.cat(
             [
                 tensor
@@ -810,6 +823,11 @@ class PLMixedCovariatesModule(PLForecastingModule, ABC):
             ],
             dim=dim_variable,
         )
+
+        # print("future cov")
+        # if future_covariates is not None:
+        #    print(future_covariates.shape)
+        #    print(future_covariates)
         return x_past, future_covariates, static_covariates
 
     def _get_batch_prediction(
@@ -850,17 +868,19 @@ class PLMixedCovariatesModule(PLForecastingModule, ABC):
             else 0
         )
 
-        input_past, input_future, input_static = self._process_input_batch((
-            past_target,
-            past_covariates,
-            historic_future_covariates,
+        input_past, input_future, input_static = self._process_input_batch(
             (
-                future_covariates[:, :roll_size, :]
-                if future_covariates is not None
-                else None
-            ),
-            static_covariates,
-        ))
+                past_target,
+                past_covariates,
+                historic_future_covariates,
+                (
+                    future_covariates[:, :roll_size, :]
+                    if future_covariates is not None
+                    else None
+                ),
+                static_covariates,
+            )
+        )
 
         out = self._produce_predict_output(x=(input_past, input_future, input_static))[
             :, self.first_prediction_index :, :
