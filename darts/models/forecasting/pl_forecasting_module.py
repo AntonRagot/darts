@@ -798,19 +798,6 @@ class PLMixedCovariatesModule(PLForecastingModule, ABC):
         ) = input_batch
         dim_variable = 2
 
-        # print("before concat")
-        # print("past target")
-        # print(past_target.shape)
-        # print(past_target)
-        # print("past cov")
-        # if past_covariates is not None:
-        #    print(past_covariates.shape)
-        #    print(past_covariates)
-        # print("hist future cov")
-        # if historic_future_covariates is not None:
-        #    print(historic_future_covariates.shape)
-        #    print(historic_future_covariates)
-
         x_past = torch.cat(
             [
                 tensor

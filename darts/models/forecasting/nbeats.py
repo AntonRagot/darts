@@ -538,28 +538,23 @@ class _NBEATSModule(PLMixedCovariatesModule):
     def forward(self, x_in: tuple):
         x, exogenous_cov, _ = x_in
 
-        # print("before")
-        # print(x.shape)
-        # print(x)
-        if exogenous_cov is not None:
-            # print(exogenous_cov.shape)
-            # exogenous_cov = exogenous_cov.expand(-1, -1, 2)
-            # print("after")
-            # print(exogenous_cov.shape)
+        print(x.shape)
+        print(exogenous_cov.shape)
 
-            # Concatenate X and Y along the second dimension
-            # x = torch.cat((x, exogenous_cov), dim=1)
-            x = x[:, :, 1:2]
-            # print(x.shape)
+        if exogenous_cov is not None:
+            x = torch.reshape(
+                x, (x.shape[0] * x.shape[2], self.input_chunk_length_multi, 1)
+            )
+            print(x.shape)
+            x = torch.cat((x, exogenous_cov), dim=1)
+
+        print(x.shape)
 
         # if x1, x2,... y1, y2... is one multivariate ts containing x and y, and a1, a2... one covariate ts
         # we reshape into x1, y1, a1, x2, y2, a2... etc
         x = torch.reshape(x, (x.shape[0], self.input_chunk_length_multi, 1))
-        # print(x.shape)
         # squeeze last dimension (because model is univariate)
         x = x.squeeze(dim=2)
-
-        # print(x.shape)
 
         # One vector of length target_length per parameter in the distribution
         y = torch.zeros(
